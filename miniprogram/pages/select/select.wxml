@@ -1,2 +1,26 @@
 <!--pages/select/select.wxml-->
-<text>pages/select/select.wxml</text>
+<page-meta>
+  <navigation-bar title="漆个龙咚呛" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+</page-meta>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="avatar">
+    <image src="{{avatarUrl}}" class="avatar {{selectedBorder}}"></image>
+  </view>
+  <view class="select">
+    <radio-group bindchange="onSelectBorder">
+      <label class="radio-label">
+        <radio value="avatar-border-1" checked="true">红色边框</radio>
+      </label>
+      <label class="radio-label">
+        <radio value="avatar-border-2">蓝色边框</radio>
+      </label>
+      <label class="radio-label">
+        <radio value="avatar-border-3">绿色边框</radio>
+      </label>
+      <label class="radio-label">
+        <radio value="avatar-border-4">黄色边框</radio>
+      </label>
+    </radio-group>
+  </view>
+  <button class="btn" bindtap="navigateToSelect">返回首页</button>
+</scroll-view>
