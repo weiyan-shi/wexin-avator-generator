@@ -22,7 +22,12 @@
       </block>
     </view>
     <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+      <block wx:if="{{!hasUserInfo}}">
+        <text class="usermotto-text">请输入您的昵称和头像</text>
+      </block>
+      <block wx:else>
+        <button class="usermotto-btn" bindtap="navigateToSelect">进入龙年头像生成器</button>
+      </block>
     </view>
   </view>
 </scroll-view>
