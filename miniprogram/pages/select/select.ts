@@ -9,6 +9,55 @@ Component({
     selectedBorder: 'avatar-border-1' // 默认选中第一个边框
   },
   methods: {
+    drawAvatarWithBorder: function () {
+      const ctx = wx.createCanvasContext('avatarCanvas', this);
+      const avatarUrl = this.data.avatarUrl; // 头像URL
+      const borderStyle = this.data.selectedBorder; // 边框样式
+
+      ctx.drawImage(avatarUrl, 0, 0, 300, 300); // 绘制头像
+      // 根据borderStyle添加边框的绘制逻辑
+      // 例如：
+      if (borderStyle === 'avatar-border-1') {
+        ctx.setStrokeStyle('red');
+        ctx.setLineWidth(10);
+        ctx.strokeRect(0, 0, 300, 300);
+      }
+      // ... 其他边框样式的处理
+
+      ctx.draw(false, () => {
+        // 绘制完成后的回调
+        this.saveCanvasImage();
+      });
+    },
+
+    saveCanvasImage: function () {
+      wx.canvasToTempFilePath({
+        canvasId: 'avatarCanvas',
+        success: (res) => {
+          this.saveImageToAlbum(res.tempFilePath);
+        },
+        fail: (err) => {
+          console.error('Canvas转图片失败', err);
+        }
+      }, this);
+    },
+
+    saveImageToAlbum: function (tempFilePath: any) {
+      wx.saveImageToPhotosAlbum({
+        filePath: tempFilePath,
+        success: () => {
+          wx.showToast({
+            title: '图片保存成功',
+            icon: 'success',
+            duration: 2000
+          });
+        },
+        fail: (err) => {
+          console.error('图片保存失败', err);
+        }
+      });
+    },
+
     onSelectBorder: function (e: WechatMiniprogram.CustomEvent) {
       this.setData({
         selectedBorder: e.detail.value
