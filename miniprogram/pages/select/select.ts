@@ -1,6 +1,6 @@
 // pages/select/select.ts
 const defaultAvatarUrl_2 = wx.getStorageSync('avatarUrl')
-Component({
+Page({
   /**
    * 页面的初始数据
    */
