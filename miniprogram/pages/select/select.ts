@@ -1,5 +1,6 @@
 // pages/select/select.ts
 const defaultAvatarUrl_2 = wx.getStorageSync('avatarUrl')
+
 Component({
   /**
    * 页面的初始数据
@@ -9,6 +10,28 @@ Component({
     selectedBorder: 'avatar-border-1' // 默认选中第一个边框
   },
   methods: {
+    // 上传媒体文件
+    uploadMedia: function () {
+      wx.chooseMedia({
+        count: 1, // 允许选择的最大数量
+        mediaType: ['image'], // 可以选择的媒体类型
+        sourceType: ['album', 'camera'], // 选择图片的来源
+        camera: 'back', // 默认使用后置摄像头
+        success(res) {
+          // 输出选择的文件的临时路径和大小
+          console.log(res.tempFiles.map(file => file.tempFilePath));
+          console.log(res.tempFiles.map(file => file.size));
+
+          // 这里可以添加上传到服务器的代码
+
+          // let cloudPath = "userPhoto/" + app.userInfo._openid + Date.now() + ".jpg";
+          // wx.cloud.uploadFile({
+          //   cloudPath,
+          //   filePath: this.data.userPhoto
+          // })
+        }
+      });
+    },
     drawAvatarWithBorder: function () {
       const ctx = wx.createCanvasContext('avatarCanvas', this);
       const avatarUrl = this.data.avatarUrl; // 头像URL
