@@ -7,9 +7,89 @@ Component({
    */
   data: {
     avatarUrl: defaultAvatarUrl_2,
-    selectedBorder: 'avatar-border-1' // 默认选中第一个边框
+    selectedBorder: '1', // 默认选中第一个边框
+    border: ''
   },
   methods: {
+    addBorder: function () {
+      let that = this;
+      wx.showLoading({
+        icon: 'loading',
+        title: '加载中，请稍后',
+      })
+
+      const borderStyle = this.data.selectedBorder; // 边框样式
+
+      wx.cloud.getTempFileURL({
+        fileList: [
+          'cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/' + borderStyle + '.png'
+        ]
+      }).then(res => {
+        // get temp file URL
+        // console.log(res.fileList)
+        that.setData({
+          border: res.fileList[0].tempFileURL
+        })
+
+        that.combineImages(that.data.border, that.data.avatarUrl);
+      }).catch(error => {
+        console.error(error);
+      })
+    },
+
+    combineImages: function(borderUrl: string, avatarUrl: string) {
+      let that = this;
+      const ctx = wx.createCanvasContext('avatarCanvas');
+    
+      // 确保两个图片都加载完成
+      wx.getImageInfo({
+        src: avatarUrl,
+        success: function(avatarInfo) {
+          console.log(avatarInfo.width, avatarInfo.height)
+          // 首先绘制头像
+          ctx.drawImage(avatarUrl, 0, 0, 128, 128);
+    
+          wx.getImageInfo({
+            src: borderUrl,
+            success: function(borderInfo) {
+              console.log(borderInfo.width, borderInfo.height)
+              // 然后在头像上绘制边框
+              ctx.drawImage(borderUrl, 0, 0, 128, 128);
+    
+              // 执行绘制操
+              ctx.draw(false, () => {
+                // 绘制完成后的回调，可在此处添加后续操作，如保存图片等
+                // 将canvas保存为图片
+                wx.canvasToTempFilePath({
+                  canvasId: 'avatarCanvas',
+                  success: function(res) {
+                    // 得到合成图片的临时路径
+                    let tempFilePath = res.tempFilePath;
+                    that.setData({
+                      combinedImage: tempFilePath
+                    });
+                    wx.hideLoading();
+                  },
+                  fail: function(err) {
+                    console.error(err);
+                    wx.hideLoading();
+                  }
+                });
+              });
+            },
+            fail: function(err) {
+              console.error('加载边框图片失败', err);
+              wx.hideLoading();
+            }
+          });
+        },
+        fail: function(err) {
+          console.error('加载头像图片失败', err);
+          wx.hideLoading();
+        }
+      });
+    },
+
     // 上传媒体文件
     uploadMedia: function () {
       wx.chooseMedia({
@@ -18,20 +98,26 @@ Component({
         sourceType: ['album', 'camera'], // 选择图片的来源
         camera: 'back', // 默认使用后置摄像头
         success(res) {
-          // 输出选择的文件的临时路径和大小
-          console.log(res.tempFiles.map(file => file.tempFilePath));
-          console.log(res.tempFiles.map(file => file.size));
+          console.log(res);
+          const filePath = res.tempFiles[0].tempFilePath; // 获取文件路径
+          const cloudPath = 'test/' + Math.floor(Math.random() * 1000000); // 构造云存储路径，并保留文件扩展名
 
-          // 这里可以添加上传到服务器的代码
-
-          // let cloudPath = "userPhoto/" + app.userInfo._openid + Date.now() + ".jpg";
-          // wx.cloud.uploadFile({
-          //   cloudPath,
-          //   filePath: this.data.userPhoto
-          // })
+          wx.cloud.uploadFile({
+            cloudPath: cloudPath,
+            filePath: filePath, // 使用文件路径
+            success: res => {
+              // 输出上传后的文件ID
+              console.log('111111', res.fileID);
+            },
+            fail: err => {
+              // 处理上传失败
+              console.error(err);
+            }
+          })
         }
       });
     },
+
     drawAvatarWithBorder: function () {
       const ctx = wx.createCanvasContext('avatarCanvas', this);
       const avatarUrl = this.data.avatarUrl; // 头像URL

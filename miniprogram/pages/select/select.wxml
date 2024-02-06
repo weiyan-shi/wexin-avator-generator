@@ -4,26 +4,26 @@
 </page-meta>
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="avatar">
-    <image src="{{avatarUrl}}" class="avatar {{selectedBorder}}"></image>
+    <image src="{{border}}" class="avatar"></image>
   </view>
   <view class="select">
     <radio-group bindchange="onSelectBorder">
       <label class="radio-label">
-        <radio value="avatar-border-1" checked="true">红色边框</radio>
+        <radio value='1' checked="true">动漫龙</radio>
       </label>
       <label class="radio-label">
-        <radio value="avatar-border-2">蓝色边框</radio>
+        <radio value='2'>国风龙</radio>
       </label>
       <label class="radio-label">
-        <radio value="avatar-border-3">绿色边框</radio>
+        <radio value='3'>招财龙</radio>
       </label>
       <label class="radio-label">
-        <radio value="avatar-border-4">黄色边框</radio>
+        <radio value='4'>剪纸龙</radio>
       </label>
     </radio-group>
   </view>
   <canvas canvas-id="avatarCanvas" style="width: 300px; height: 300px;"></canvas>
-  <button bindtap="uploadMedia">上传图片</button>
+  <button class="btn" bindtap="addBorder">生成头像</button>
   <button class="btn" bindtap="drawAvatarWithBorder">保存头像</button>
   <button class="btn" bindtap="navigateToSelect">返回首页</button>
 </scroll-view>
