@@ -37,32 +37,34 @@ Component({
       })
     },
 
-    combineImages: function(borderUrl: string, avatarUrl: string) {
+    combineImages: function (borderUrl: any, avatarUrl: any) {
       let that = this;
-      const ctx = wx.createCanvasContext('avatarCanvas');
-    
-      // 确保两个图片都加载完成
-      wx.getImageInfo({
-        src: avatarUrl,
-        success: function(avatarInfo) {
-          console.log(avatarInfo.width, avatarInfo.height)
-          // 首先绘制头像
-          ctx.drawImage(avatarUrl, 0, 0, 128, 128);
-    
-          wx.getImageInfo({
-            src: borderUrl,
-            success: function(borderInfo) {
-              console.log(borderInfo.width, borderInfo.height)
-              // 然后在头像上绘制边框
-              ctx.drawImage(borderUrl, 0, 0, 128, 128);
-    
-              // 执行绘制操
-              ctx.draw(false, () => {
-                // 绘制完成后的回调，可在此处添加后续操作，如保存图片等
-                // 将canvas保存为图片
+      const query = wx.createSelectorQuery();
+      console.log('000000')
+      query.select('#avatarCanvas')
+        .fields({ node: true, size: true })
+        .exec((res) => {
+          if (res && res[0]) {
+            const canvas = res[0].node;
+            const ctx = canvas.getContext('2d');
+            const dpr = wx.getSystemInfoSync().pixelRatio;
+            canvas.width = res[0].width * dpr;
+            canvas.height = res[0].height * dpr;
+            ctx.scale(dpr, dpr);
+
+            // 加载头像图片
+            const avatarImage = canvas.createImage();
+            avatarImage.onload = () => {
+              ctx.drawImage(avatarImage, 0, 0, 128, 128);
+
+              // 加载边框图片
+              const borderImage = canvas.createImage();
+              borderImage.onload = () => {
+                ctx.drawImage(borderImage, 0, 0, 128, 128);
+                // 使用新的方法来保存图片
                 wx.canvasToTempFilePath({
-                  canvasId: 'avatarCanvas',
-                  success: function(res) {
+                  canvas: canvas,
+                  success: function (res) {
                     // 得到合成图片的临时路径
                     let tempFilePath = res.tempFilePath;
                     that.setData({
@@ -70,24 +72,17 @@ Component({
                     });
                     wx.hideLoading();
                   },
-                  fail: function(err) {
+                  fail: function (err) {
                     console.error(err);
                     wx.hideLoading();
                   }
-                });
-              });
-            },
-            fail: function(err) {
-              console.error('加载边框图片失败', err);
-              wx.hideLoading();
-            }
-          });
-        },
-        fail: function(err) {
-          console.error('加载头像图片失败', err);
-          wx.hideLoading();
-        }
-      });
+                }, this);
+              };
+              borderImage.src = borderUrl;
+            };
+            avatarImage.src = avatarUrl;
+          }
+        });
     },
 
     // 上传媒体文件
@@ -118,53 +113,37 @@ Component({
       });
     },
 
-    drawAvatarWithBorder: function () {
-      const ctx = wx.createCanvasContext('avatarCanvas', this);
-      const avatarUrl = this.data.avatarUrl; // 头像URL
-      const borderStyle = this.data.selectedBorder; // 边框样式
-
-      ctx.drawImage(avatarUrl, 0, 0, 300, 300); // 绘制头像
-      // 根据borderStyle添加边框的绘制逻辑
-      // 例如：
-      if (borderStyle === 'avatar-border-1') {
-        ctx.setStrokeStyle('red');
-        ctx.setLineWidth(10);
-        ctx.strokeRect(0, 0, 300, 300);
-      }
-      // ... 其他边框样式的处理
-
-      ctx.draw(false, () => {
-        // 绘制完成后的回调
-        this.saveCanvasImage();
+    saveImageToAlbum: function () {
+      const query = wx.createSelectorQuery();
+      query.select('#avatarCanvas').fields({ node: true, size: true }).exec((res) => {
+        const canvas = res[0].node;
+        // 使用 canvas 实例的方法来导出画布内容
+        wx.canvasToTempFilePath({
+          canvas: canvas,
+          fileType: 'png',
+          success(res: any) {
+            const tempFilePath = res.tempFilePath;
+            // 下一步: 请求用户授权并保存图片
+            wx.saveImageToPhotosAlbum({
+              filePath: tempFilePath,
+              success: () => {
+                wx.showToast({
+                  title: '图片保存成功',
+                  icon: 'success',
+                  duration: 2000
+                });
+              },
+              fail: (err) => {
+                console.error('图片保存失败', err);
+              }
+            });
+          },
+          fail(err: any) {
+            console.error('导出画布失败', err);
+          }
+        });
       });
-    },
-
-    saveCanvasImage: function () {
-      wx.canvasToTempFilePath({
-        canvasId: 'avatarCanvas',
-        success: (res) => {
-          this.saveImageToAlbum(res.tempFilePath);
-        },
-        fail: (err) => {
-          console.error('Canvas转图片失败', err);
-        }
-      }, this);
-    },
-
-    saveImageToAlbum: function (tempFilePath: any) {
-      wx.saveImageToPhotosAlbum({
-        filePath: tempFilePath,
-        success: () => {
-          wx.showToast({
-            title: '图片保存成功',
-            icon: 'success',
-            duration: 2000
-          });
-        },
-        fail: (err) => {
-          console.error('图片保存失败', err);
-        }
-      });
+      // 假设你已经完成了画布的绘制
     },
 
     onSelectBorder: function (e: WechatMiniprogram.CustomEvent) {

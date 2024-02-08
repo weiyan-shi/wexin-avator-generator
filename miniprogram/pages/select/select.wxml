@@ -22,8 +22,8 @@
       </label>
     </radio-group>
   </view>
-  <canvas canvas-id="avatarCanvas" style="width: 300px; height: 300px;"></canvas>
+  <canvas canvas-id="avatarCanvas" id="avatarCanvas" type="2d" style="width: 300px; height: 300px;"></canvas>
   <button class="btn" bindtap="addBorder">生成头像</button>
-  <button class="btn" bindtap="drawAvatarWithBorder">保存头像</button>
+  <button class="btn" bindtap="saveImageToAlbum">保存头像</button>
   <button class="btn" bindtap="navigateToSelect">返回首页</button>
 </scroll-view>
