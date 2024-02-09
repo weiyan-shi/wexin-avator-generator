@@ -1,20 +1,64 @@
-/* pages/select/select.wxss */
 page {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f0f0f0; // 设置页面背景颜色为淡灰色
+  // padding: 20px; // 页面内边距
 }
+
 .scrollarea {
   flex: 1;
-  overflow-y: hidden;
+  overflow-y: auto; // 允许Y轴滚动
+  // padding: 10px;
+  background-color: #ffffff; // 设置滚动区域的背景为白色
+  border-radius: 10px; // 圆角边框
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 添加轻微的阴影效果
 }
 
-.avatar {
-  display: block;
-  width: 128px;
-  height: 128px;
+.avatarCanvas {
+  margin: 20px auto; // 居中显示
+  border: 1px solid #d9d9d9; // 边框颜色
+  border-radius: 10px; // 圆角边框
 }
-// .select {
-//   /* 单选框的样式 */
-// }
 
+.canvass {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.radio-label {
+  display: block; // 使每个单选按钮独占一行
+  margin-bottom: 10px; // 添加底部边距
+  padding: 10px; // 内边距
+  background-color: #f7f7f7; // 背景颜色
+  border-radius: 5px; // 圆角边框
+  border: 1px solid #e8e8e8; // 边框颜色
+  color: #333; // 文本颜色
+}
+
+.radio {
+  margin-right: 10px; // 单选按钮右边距
+}
+
+.btn {
+  display: block; // 使按钮独占一行
+  width: calc(100% - 20px); // 宽度适应父容器，减去左右内边距
+  margin: 10px auto; // 上下外边距，水平居中
+  padding: 10px 0; // 上下内边距
+  background-color: #409eff; // 按钮背景颜色
+  color: white; // 按钮文本颜色
+  text-align: center; // 文本居中
+  border-radius: 5px; // 圆角边框
+  border: none; // 无边框
+  cursor: pointer; // 鼠标手势
+
+  &:hover {
+    background-color: darken(#409eff, 10%); // 鼠标悬停时颜色加深
+  }
+}
+
+.btn-top {
+  margin-top: 150px;
+}

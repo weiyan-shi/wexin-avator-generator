@@ -40,7 +40,6 @@ Component({
     combineImages: function (borderUrl: any, avatarUrl: any) {
       let that = this;
       const query = wx.createSelectorQuery();
-      console.log('000000')
       query.select('#avatarCanvas')
         .fields({ node: true, size: true })
         .exec((res) => {
@@ -150,6 +149,7 @@ Component({
       this.setData({
         selectedBorder: e.detail.value
       });
+      this.addBorder();
     },
 
     navigateToSelect() {
@@ -161,6 +161,7 @@ Component({
      * 生命周期函数--监听页面加载
      */
     onLoad() {
+      this.addBorder();
     },
 
     /**

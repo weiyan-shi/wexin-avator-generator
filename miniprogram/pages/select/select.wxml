@@ -3,8 +3,8 @@
   <navigation-bar title="漆个龙咚呛" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 </page-meta>
 <scroll-view class="scrollarea" scroll-y type="list">
-  <view class="avatar">
-    <image src="{{border}}" class="avatar"></image>
+  <view class="canvass">
+    <canvas canvas-id="avatarCanvas" id="avatarCanvas" type="2d" style="width: 128px; height: 128px;"></canvas>
   </view>
   <view class="select">
     <radio-group bindchange="onSelectBorder">
@@ -22,8 +22,7 @@
       </label>
     </radio-group>
   </view>
-  <canvas canvas-id="avatarCanvas" id="avatarCanvas" type="2d" style="width: 300px; height: 300px;"></canvas>
-  <button class="btn" bindtap="addBorder">生成头像</button>
-  <button class="btn" bindtap="saveImageToAlbum">保存头像</button>
-  <button class="btn" bindtap="navigateToSelect">返回首页</button>
+  <!-- <button class="btn btn-top" bindtap="addBorder">生成头像</button> -->
+  <button class="btn btn-top" bindtap="saveImageToAlbum">保存头像</button>
+  <!-- <button class="btn" bindtap="navigateToSelect">返回首页</button> -->
 </scroll-view>
