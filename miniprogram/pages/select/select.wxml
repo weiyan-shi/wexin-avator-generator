@@ -9,16 +9,13 @@
   <view class="select">
     <radio-group bindchange="onSelectBorder">
       <label class="radio-label">
-        <radio value='1' checked="true">动漫龙</radio>
+        <radio value='1'>传统龙风格</radio>
       </label>
       <label class="radio-label">
-        <radio value='2'>国风龙</radio>
+        <radio value='2'>卡通龙风格</radio>
       </label>
       <label class="radio-label">
-        <radio value='3'>招财龙</radio>
-      </label>
-      <label class="radio-label">
-        <radio value='4'>剪纸龙</radio>
+        <radio value='3'>招财龙风格</radio>
       </label>
     </radio-group>
   </view>

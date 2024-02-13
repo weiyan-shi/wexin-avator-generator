@@ -11,6 +11,54 @@ Component({
     border: ''
   },
   methods: {
+    chooseBorder: function (borderStyle: string) {
+      type BorderData = {
+        [key: string]: string[];
+      };
+      const jsonData: BorderData = {
+        "border/1": [
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/1/garrisonchloen5973_empty_center_1157246d-1001-4ef3-b8bd-4ea5fb4ac6cc_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/1/garrisonchloen5973_golden_full_of_circle_red_full_of_circle_a_C_dd63f604-519b-4940-821f-a76520454834_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/1/garrisonchloen5973_red_full_of_circle_a_Chinese_dragon_frame_no_0b42305c-3b34-45f6-994b-8b4751f1899b_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/1/garrisonchloen5973_red_full_of_dragon_body_2ef23f27-6604-433a-a8bb-b5025fd064a6_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/1/garrisonchloen5973_troditional_dragon_frame_same_size_avarta_bo_631bc897-7628-4e2e-8347-440de9a2c6f0_no_background.png"
+        ],
+        "border/2": [
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/27ff51ae-7375-402c-ae75-e84948a8180a_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_083138c8-2303-4b04-9207-dc8839ad9b4e_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_12077d30-1f44-4164-b1d0-5e35578e42e9_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_652fe9bb-fb6b-491b-bb1e-96d1f18135d7_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_76909f78-e0ca-43f7-8f86-f9f9ffd350bf_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_76909f78-e0ca-43f7-8f86-f9f9ffd350bf_no_background_no_background_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_c251e082-6725-4784-a55d-544b52d2e013_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_Chinese_dragon_frame_e8196b2e-f21e-4c29-973f-21dff9dd4de6_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_cartoon_dragon_frame_c8972fcf-5615-4ae3-8244-c4ff66610184_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/2/garrisonchloen5973_no_buildings_no_design_in_circle_no_green_84e62bf1-67d8-4282-873b-4889320fa074_no_background.png"
+        ],
+        "border/3": [
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_1a7c4e7a-a141-4a5c-83ab-7ccca14667b3_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5003243-1324122215/border/3/garrisonchloen5973_add_some_red_2ef732d5-efd0-4e4d-a520-e183c39aa085_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_7a5f8967-8ba3-49b6-ae55-78cc840a6530_no_background_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_9d9710c2-9f04-4066-8143-51a49386767c_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_a20998c3-140b-4d10-bda3-7ac44eb14fb1_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_a4376b98-7ff8-474a-9399-0412406e20bc_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_b741582a-fd3c-448a-9058-b459523a91ba_no_background_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_d3f1148f-a8a5-41cc-a31c-bdaf2ee4a098_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_d3f1148f-a8a5-41cc-a31c-bdaf2ee4a098_no_background_no_background_no_background.png",
+          "cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/3/garrisonchloen5973_add_some_red_ec14a766-1a13-479f-a57b-f03b6c289911_no_background.png"
+        ]
+      }; // 使用上面定义的 JSON 数据替换此处
+      const borderPath = 'border/' + borderStyle; // 或 'border/2', 'border/3'
+      const files = jsonData[borderPath];
+      if (!files || files.length === 0) {
+        console.error('No files found for the given path.');
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * files.length);
+      const randomFileId = files[randomIndex];
+      return randomFileId
+    },
+
     addBorder: function () {
       let that = this;
       wx.showLoading({
@@ -19,10 +67,10 @@ Component({
       })
 
       const borderStyle = this.data.selectedBorder; // 边框样式
-
+      const fileId = this.chooseBorder(borderStyle) || '';
       wx.cloud.getTempFileURL({
         fileList: [
-          'cloud://cloud1-2ge2tu77e5063243.636c-cloud1-2ge2tu77e5063243-1324122215/border/' + borderStyle + '.png'
+          fileId
         ]
       }).then(res => {
         // get temp file URL
